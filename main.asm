@@ -463,9 +463,11 @@ score_comp:
 	mov al,result[di]
 	cmp al,scores[si]
 	jl score_take_skip
+	jg score_comp_done
 	inc si
 	inc di
 	loop score_comp
+score_comp_done:
 	
 	mov dh,15
 	mov dl,30
@@ -699,7 +701,9 @@ done:
 	jle main_bomberman_dead
 	
 ;add victory condition here
-	jmp main_victory
+	cmp c_count,0
+	jle main_victory
+	jmp main_post_game
 
 main_call_leaderboard:
 	call reset_display
